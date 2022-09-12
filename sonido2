@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class pasos : MonoBehaviour
+{
+    public AudioSource Aud;
+
+    public AudioClip[] clips;
+
+    public AudioClip clip;
+
+    bool isPlaying = false;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Aud.clip = clip;
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isPlaying = true;
+            Reproducir();
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+            isPlaying = false;
+    }
+    public void Reproducir()
+    {
+        StartCoroutine(play(0.6f));
+    }
+    public void Detener()
+    {
+        Aud.Stop();
+    }
+    IEnumerator play(float tiempo)
+    {
+        while (isPlaying)
+        {
+            if (Aud.pitch >= 0.5 && Aud.pitch <= 2.0)
+            {
+                var Pitch = Random.Range(-0.5f, 0.5f);
+                Aud.pitch += Pitch;
+            }
+            else{
+                Aud.pitch = 1.0f;
+            }
+            {
+                var Level = Random.Range(0.7f, 1.3f);
+                Aud.volume *= Level;
+                var Audio = (int)Random.Range(0.0f, 2.5f);
+                Aud.clip = clips[Audio];
+                Aud.Play();
+                yield return new WaitForSeconds(tiempo);
+            }
+        }
+    }
+}
