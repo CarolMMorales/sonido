@@ -192,14 +192,12 @@ public class sonido : MonoBehaviour
     public float createSaw(int timeIndex, float frecuencia, float frecuenciaMuestreo, int Tm)
     {
         float m1 = 1 / ((Tm / 2.0f));
-        float m2 = - 1 / (Tm - ((Tm * 3) / 2.0f));
+        float m2 = 1 / (Tm - ((Tm) / 2.0f));
 
         float b1 = 1 - (m1 * (Tm / 2));
-
-        float b3 = 1 - (m2 * Tm);
+        float b2 = 0 - (m2 * Tm);
 
         if (timeIndex <= (Tm / 2)) return (m1 * timeIndex + b1);
-        if (timeIndex <= (Tm / 2)) return (1 - (m2 * (Tm / 2)));
-        else return (m2 * timeIndex + b3);
+        else return (m2 * timeIndex + b2);
     }
 }
